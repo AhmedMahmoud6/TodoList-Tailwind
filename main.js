@@ -1,7 +1,12 @@
 let addTasks = document.querySelector(".add-task");
 let tasksContainer = document.querySelector(".tasks-container");
 let searchNote = document.querySelector(".search");
+let filterDiv = document.querySelector(".filter");
+let filterMenu = document.querySelector(".menu");
+
+let menuOpened = false;
 let tasksList;
+
 if (JSON.parse(sessionStorage.getItem("taskList"))) {
   tasksList = JSON.parse(sessionStorage.getItem("taskList"));
 } else {
@@ -93,6 +98,21 @@ document.addEventListener("click", (e) => {
       });
     }
   } catch (err) {}
+
+  // filter tasks
+  if (filterMenu.contains(e.target)) {
+    renderTasks(tasksList, e.target.id);
+    triggerMenu(filterMenu, menuOpened);
+    menuOpened = !menuOpened;
+
+    let filterText = document.querySelector(".filter h2");
+    filterText.textContent = e.target.id.toUpperCase();
+  }
+
+  if (menuOpened && !filterDiv.contains(e.target)) {
+    triggerMenu(filterMenu, menuOpened);
+    menuOpened = !menuOpened;
+  }
 });
 
 // open task creation form
@@ -107,4 +127,11 @@ searchNote.addEventListener("input", (_) => {
   } else {
     searchTask(tasksList, searchNote.value);
   }
+});
+
+// filter menu trigger
+
+filterDiv.addEventListener("click", (_) => {
+  triggerMenu(filterMenu, menuOpened);
+  menuOpened = !menuOpened;
 });

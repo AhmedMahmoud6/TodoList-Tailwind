@@ -1,4 +1,4 @@
-let counter = 0;
+let counter = 0; // acts like an id
 
 function taskInfo() {
   let infoHTML = `
@@ -107,4 +107,12 @@ function searchTask(taskList, userInput) {
     searched.title.startsWith(userInput)
   );
   renderTasks(searchedTasks);
+}
+
+function triggerMenu(filterMenu, menuOpened) {
+  if (menuOpened) {
+    filterMenu.style = "display: none;";
+  } else {
+    filterMenu.style = "display: flex;";
+  }
 }

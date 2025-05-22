@@ -27,19 +27,41 @@
           <i class="fa-solid fa-magnifying-glass" style="color: #6c63ff"></i>
         </div>
 
-        <div
-          class="filter-tasks flex bg-[#6c63ff] p-2 px-4 flex items-center gap-3 cursor-pointer select-none rounded"
-        >
-          <h2 class="text-white">ALL</h2>
-          <i
-            class="fa-solid fa-chevron-down text-xs"
-            style="color: #f7f7f7"
-          ></i>
+        <div class="filter-tasks flex flex-col gap-4 h-fit w-fit">
+          <div
+            class="filter flex bg-[#6c63ff] w-32 hover:bg-[#7a70ff] h-12 p-2 px-4 items-center justify-between gap-3 cursor-pointer select-none rounded"
+          >
+            <h2 class="text-white text-sm">ALL</h2>
+            <i
+              class="fa-solid fa-chevron-down text-xs"
+              style="color: #f7f7f7"
+            ></i>
+          </div>
+
+          <div
+            class="menu relative hidden flex flex-col bg-white outline-2 outline-[#6c63ff] h-30 cursor-pointer select-none rounded"
+          >
+            <span
+              class="hover:bg-[#dbd9f9] text-[#6c63ff] px-4 h-full flex items-center"
+              id="all"
+              >All</span
+            >
+            <span
+              class="hover:bg-[#dbd9f9] text-[#6c63ff] px-4 h-full flex items-center"
+              id="completed"
+              >Complete</span
+            >
+            <span
+              class="hover:bg-[#dbd9f9] text-[#6c63ff] px-4 h-full flex items-center"
+              id="pending"
+              >Pending</span
+            >
+          </div>
         </div>
 
         <div class="h-210 flex flex-col justify-between">
           <div
-            class="theme bg-[#6c63ff] p-2 px-4 cursor-pointer h-12 flex items-center justify-center rounded"
+            class="theme bg-[#6c63ff] hover:bg-[#7a70ff] p-2 px-4 cursor-pointer h-12 flex items-center justify-center rounded"
           >
             <i class="fa-solid fa-moon text-xl" style="color: #f7f7f7"></i>
           </div>
