@@ -1,18 +1,22 @@
 let counter = 0; // acts like an id
 
-function taskInfo() {
+function taskInfo(lightMode) {
   let infoHTML = `
     <div
       class="create-task fixed w-screen h-screen bg-black/50 top-0 flex justify-center items-center"
     >
       <div
-        class="new-note bg-white w-200 h-100 rounded-lg p-4 px-30 flex flex-col items-center justify-between"
+        class="new-note ${
+          lightMode ? `bg-white` : `bg-[#252525]`
+        }  w-200 h-100 rounded-lg p-4 px-30 flex flex-col items-center justify-between outline-2 outline-white"
       >
         <div class="top-side flex flex-col gap-4 items-center w-full">
-          <h2>NEW NOTE</h2>
+          <h2 class="${lightMode ? `text-black` : `text-white`}">NEW NOTE</h2>
           <input
             type="text"
-            class="task-title outline-2 outline-[#6c63ff] w-full h-12 px-4 py-1 rounded focus-within:shadow-lg focus-within:shadow-indigo-500/50"
+            class="task-title placeholder-[#c3c1e5] ${
+              lightMode ? `text-black` : `text-white`
+            } outline-2 outline-[#6c63ff] w-full h-12 px-4 py-1 rounded focus-within:shadow-lg focus-within:shadow-indigo-500/50"
             placeholder="Input your note..."
           />
         </div>
@@ -82,7 +86,9 @@ function createTask(taskList) {
                       : `<input type="checkbox" class="input-check form-checkbox h-5 w-5 text-blue-600 cursor-pointer peer" checked/>`
                   }
 
-                    <p class="title peer-checked:line-through peer-checked:text-[#8e8e8e]">
+                    <p class="title peer-checked:line-through peer-checked:text-[#8e8e8e] ${
+                      lightMode ? `text-black` : `text-white`
+                    }">
                       ${i.title}
                     </p>
                   </div>
@@ -115,4 +121,58 @@ function triggerMenu(filterMenu, menuOpened) {
   } else {
     filterMenu.style = "display: flex;";
   }
+}
+
+function updateTitleColor(lightMode, tasksList) {
+  let allTasks;
+  if (tasksList.length > 0)
+    allTasks = document.querySelectorAll(".task .title");
+
+  if (lightMode)
+    for (let i of allTasks) {
+      i.classList.replace("text-white", "text-black");
+    }
+  else
+    for (let i of allTasks) {
+      i.classList.replace("text-black", "text-white");
+    }
+}
+
+function changeTheme(tasksList, lightMode) {
+  let allTasks;
+  if (tasksList.length > 0)
+    allTasks = document.querySelectorAll(".task .title");
+
+  if (lightMode) {
+    document.body.classList.replace("bg-white", "bg-[#252525]");
+    document
+      .querySelector(".parent h1")
+      .classList.replace("text-black", "text-white");
+
+    document
+      .querySelector(".filtering input")
+      .classList.replace("text-black", "text-white");
+
+    // all tasks
+    if (tasksList.length > 0)
+      for (let i of allTasks) {
+        i.classList.replace("text-black", "text-white");
+      }
+  } else {
+    document.body.classList.replace("bg-[#252525]", "bg-white");
+    document
+      .querySelector(".parent h1")
+      .classList.replace("text-white", "text-black");
+    document
+      .querySelector(".filtering input")
+      .classList.replace("text-white", "text-black");
+
+    // all tasks
+    if (tasksList.length > 0)
+      for (let i of allTasks) {
+        i.classList.replace("text-white", "text-black");
+      }
+  }
+
+  sessionStorage.setItem("theme", JSON.stringify(lightMode));
 }

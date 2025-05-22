@@ -3,7 +3,11 @@ let tasksContainer = document.querySelector(".tasks-container");
 let searchNote = document.querySelector(".search");
 let filterDiv = document.querySelector(".filter");
 let filterMenu = document.querySelector(".menu");
+let theme = document.querySelector(".theme");
 
+let lightMode = JSON.parse(sessionStorage.getItem("theme")) ?? false;
+
+let filterCategory = "all";
 let menuOpened = false;
 let tasksList;
 
@@ -13,6 +17,7 @@ if (JSON.parse(sessionStorage.getItem("taskList"))) {
   tasksList = [];
 }
 
+changeTheme(tasksList, lightMode);
 renderTasks(tasksList);
 
 document.addEventListener("click", (e) => {
@@ -57,6 +62,7 @@ document.addEventListener("click", (e) => {
       for (let i = 0; i < tasksList.length; i++) {
         if (tasksList[i].id == taskId) {
           tasksList.splice(i, 1);
+          break;
         }
       }
       sessionStorage.setItem("taskList", JSON.stringify(tasksList));
@@ -76,16 +82,18 @@ document.addEventListener("click", (e) => {
       let taskP = taskContainer.querySelector("p");
       let newInput = document.createElement("input");
       newInput.value = taskP.innerText;
-      newInput.className = "border px-2 py-1 rounded";
+      newInput.className = "border px-2 py-1 rounded title text-black";
       taskContainer.replaceChild(newInput, taskP);
+      newInput.focus();
 
+      updateTitleColor(lightMode, tasksList);
       // updating the title when pressing enter key
-      document.addEventListener("keydown", (event) => {
+      newInput.addEventListener("keydown", (event) => {
         if (event.key === "Enter") {
           let newTaskP = document.createElement("p");
           newTaskP.textContent = newInput.value;
           newTaskP.className =
-            "title peer-checked:line-through peer-checked:text-[#8e8e8e]";
+            "title peer-checked:line-through peer-checked:text-[#8e8e8e] text-black";
           taskContainer.replaceChild(newTaskP, newInput);
 
           for (let i of tasksList) {
@@ -93,6 +101,7 @@ document.addEventListener("click", (e) => {
               i.title = newInput.value;
             }
           }
+          updateTitleColor(lightMode, tasksList);
         }
         sessionStorage.setItem("taskList", JSON.stringify(tasksList));
       });
@@ -101,12 +110,13 @@ document.addEventListener("click", (e) => {
 
   // filter tasks
   if (filterMenu.contains(e.target)) {
-    renderTasks(tasksList, e.target.id);
+    filterCategory = e.target.id;
+    renderTasks(tasksList, filterCategory);
     triggerMenu(filterMenu, menuOpened);
     menuOpened = !menuOpened;
 
     let filterText = document.querySelector(".filter h2");
-    filterText.textContent = e.target.id.toUpperCase();
+    filterText.textContent = filterCategory.toUpperCase();
   }
 
   if (menuOpened && !filterDiv.contains(e.target)) {
@@ -117,13 +127,13 @@ document.addEventListener("click", (e) => {
 
 // open task creation form
 addTasks.addEventListener("click", (_) => {
-  taskInfo();
+  taskInfo(lightMode);
 });
 
 // serach task
 searchNote.addEventListener("input", (_) => {
   if (searchNote.value == "") {
-    renderTasks(tasksList);
+    renderTasks(tasksList, filterCategory);
   } else {
     searchTask(tasksList, searchNote.value);
   }
@@ -134,4 +144,9 @@ searchNote.addEventListener("input", (_) => {
 filterDiv.addEventListener("click", (_) => {
   triggerMenu(filterMenu, menuOpened);
   menuOpened = !menuOpened;
+});
+
+theme.addEventListener("click", (_) => {
+  lightMode = !lightMode;
+  changeTheme(tasksList, lightMode);
 });
