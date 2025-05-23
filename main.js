@@ -22,6 +22,8 @@ if (JSON.parse(sessionStorage.getItem("taskList"))) {
 changeTheme(tasksList, !lightMode);
 renderTasks(tasksList, filterCategory, lightMode);
 
+document.querySelector(".search").focus();
+
 document.addEventListener("click", (e) => {
   // change status
   if (e.target.classList.contains("input-check")) {
@@ -87,7 +89,7 @@ document.addEventListener("click", (e) => {
       let taskP = taskContainer.querySelector("p");
       let newInput = document.createElement("input");
       newInput.value = taskP.innerText;
-      newInput.className = "border px-2 py-1 rounded title text-black";
+      newInput.className = "border px-2 py-1 rounded title text-black w-11/12";
       taskContainer.replaceChild(newInput, taskP);
       newInput.focus();
 
@@ -98,7 +100,7 @@ document.addEventListener("click", (e) => {
           let newTaskP = document.createElement("p");
           newTaskP.textContent = newInput.value;
           newTaskP.className =
-            "title peer-checked:line-through peer-checked:text-[#8e8e8e] text-black";
+            "title truncate w-full peer-checked:line-through peer-checked:text-[#8e8e8e] text-white";
           taskContainer.replaceChild(newTaskP, newInput);
 
           for (let i of tasksList) {

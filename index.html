@@ -15,9 +15,9 @@
     <div class="parent flex items-center flex-col gap-8 pt-10">
       <h1 class="text-2xl text-black font-bold">TODO LIST</h1>
 
-      <div class="filtering flex gap-3 h-12">
+      <div class="filtering max-[768px]:w-11/12 flex gap-3 h-12">
         <div
-          class="input-field outline-2 outline-[#6c63ff] w-130 flex items-center justify-between px-4 py-1 rounded focus-within:shadow-lg focus-within:shadow-indigo-500/50"
+          class="input-field outline-2 outline-[#6c63ff] w-130 max-[768px]:w-full flex items-center justify-between px-4 py-1 rounded focus-within:shadow-lg focus-within:shadow-indigo-500/50"
         >
           <input
             type="text"
@@ -27,7 +27,9 @@
           <i class="fa-solid fa-magnifying-glass" style="color: #6c63ff"></i>
         </div>
 
-        <div class="filter-tasks flex flex-col gap-4 h-fit w-fit">
+        <div
+          class="filter-tasks max-[768px]:fixed max-[768px]:bottom-12 left-5 flex flex-col gap-4 h-fit w-fit"
+        >
           <div
             class="filter flex bg-[#6c63ff] w-32 hover:bg-[#7a70ff] h-12 p-2 px-4 items-center justify-between gap-3 cursor-pointer select-none rounded"
           >
@@ -61,19 +63,21 @@
 
         <div class="flex flex-col justify-between">
           <div
-            class="theme bg-[#6c63ff] hover:bg-[#7a70ff] p-2 px-4 cursor-pointer h-12 flex items-center justify-center rounded"
+            class="theme max-[768px]:fixed max-[768px]:bottom-12 left-40 bg-[#6c63ff] hover:bg-[#7a70ff] p-2 px-4 cursor-pointer h-12 flex items-center justify-center rounded"
           >
             <i class="fa-solid fa-moon text-xl" style="color: #f7f7f7"></i>
           </div>
           <div
-            class="add-task fixed bottom-12 bg-[#6c63ff] rounded-full w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-[#7a70ff]"
+            class="add-task fixed bottom-12 max-[768px]:right-12 bg-[#6c63ff] rounded-full w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-[#7a70ff]"
           >
             <i class="fa-solid fa-plus text-2xl" style="color: #f7f7f7"></i>
           </div>
         </div>
       </div>
 
-      <div class="tasks-container w-150 flex flex-col gap-3"></div>
+      <div
+        class="tasks-container w-150 max-[768px]:w-11/12 flex flex-col gap-3 overflow-y-auto max-h-[550px]"
+      ></div>
     </div>
 
     <script src="functions.js"></script>

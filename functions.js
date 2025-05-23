@@ -15,7 +15,7 @@ function taskInfo(lightMode) {
       <div
         class="new-note ${
           lightMode ? `bg-white` : `bg-[#252525]`
-        }  w-200 h-100 rounded-lg p-4 px-30 flex flex-col items-center justify-between outline-2 outline-white"
+        }  w-200 h-100 rounded-lg p-4 px-30 max-[768px]:px-5 flex flex-col items-center justify-between outline-2 outline-white"
       >
         <div class="top-side flex flex-col gap-4 items-center w-full">
           <h2 class="${lightMode ? `text-black` : `text-white`}">NEW NOTE</h2>
@@ -44,6 +44,7 @@ function taskInfo(lightMode) {
     </div>
     `;
   document.body.insertAdjacentHTML("beforeend", infoHTML);
+  document.querySelector(".task-title").focus();
 }
 
 function removeTaskInfo() {
@@ -78,25 +79,25 @@ function createTask(taskList, lightMode) {
   for (let i of taskList) {
     let taskHtml = `
               <div
-                class="task group flex justify-between items-center border-b border-[#b1adfb] w-full h-12"
+                class="task group flex flex-shrink-0 justify-between items-center border-b border-[#b1adfb] w-full h-12"
                 id = ${i.id}
               >
-                <label class="w-full h-full cursor-pointer flex items-center">
-                  <div class="left-side flex items-center gap-4">
+                <label class="h-full w-full cursor-pointer max-w-[calc(100%-85px)] flex items-center">
+                  <div class="left-side overflow-hidden flex items-center w-full h-full gap-4">
                   ${
                     i.status == "pending"
-                      ? `<input type="checkbox" class="input-check form-checkbox h-5 w-5 text-blue-600 cursor-pointer peer"/>`
-                      : `<input type="checkbox" class="input-check form-checkbox h-5 w-5 text-blue-600 cursor-pointer peer" checked/>`
+                      ? `<input type="checkbox" class="input-check form-checkbox h-5 w-5 text-blue-600 cursor-pointer peer shrink-0"/>`
+                      : `<input type="checkbox" class="input-check form-checkbox h-5 w-5 text-blue-600 cursor-pointer peer shrink-0" checked/>`
                   }
 
-                    <p class="title peer-checked:line-through peer-checked:text-[#8e8e8e] ${textColor(
+                    <p class="title truncate w-full peer-checked:line-through peer-checked:text-[#8e8e8e] ${textColor(
                       lightMode
                     )}">
                       ${i.title}
                     </p>
                   </div>
                 </label>
-                <div class="right-side flex gap-4">
+                <div class="right-side m-3 flex gap-4">
                   <div class="edit hidden group-hover:block cursor-pointer">
                     <i class="fa-solid fa-pen" style="color: #7972fe"></i>
                   </div>
