@@ -5,7 +5,9 @@ let filterDiv = document.querySelector(".filter");
 let filterMenu = document.querySelector(".menu");
 let theme = document.querySelector(".theme");
 
-let lightMode = JSON.parse(sessionStorage.getItem("theme")) ?? false;
+let lightMode = JSON.parse(sessionStorage.getItem("theme")) ?? true;
+
+sessionStorage.setItem("theme", JSON.stringify(lightMode));
 
 let filterCategory = "all";
 let menuOpened = false;
@@ -17,7 +19,7 @@ if (JSON.parse(sessionStorage.getItem("taskList"))) {
   tasksList = [];
 }
 
-changeTheme(tasksList, lightMode);
+changeTheme(tasksList, !lightMode);
 renderTasks(tasksList);
 
 document.addEventListener("click", (e) => {
@@ -147,6 +149,6 @@ filterDiv.addEventListener("click", (_) => {
 });
 
 theme.addEventListener("click", (_) => {
-  lightMode = !lightMode;
   changeTheme(tasksList, lightMode);
+  lightMode = JSON.parse(sessionStorage.getItem("theme")) ?? true;
 });

@@ -139,40 +139,36 @@ function updateTitleColor(lightMode, tasksList) {
 }
 
 function changeTheme(tasksList, lightMode) {
-  let allTasks;
-  if (tasksList.length > 0)
-    allTasks = document.querySelectorAll(".task .title");
+  const toggleClass = (selector, from, to) => {
+    let element = document.querySelector(selector);
+    if (element) element.classList.replace(from, to);
+  };
 
-  if (lightMode) {
-    document.body.classList.replace("bg-white", "bg-[#252525]");
-    document
-      .querySelector(".parent h1")
-      .classList.replace("text-black", "text-white");
+  toggleClass(
+    "body",
+    lightMode ? "bg-white" : "bg-[#252525]",
+    lightMode ? "bg-[#252525]" : "bg-white"
+  );
+  toggleClass(
+    ".parent h1",
+    lightMode ? "text-black" : "text-white",
+    lightMode ? "text-white" : "text-black"
+  );
+  toggleClass(
+    ".filtering input",
+    lightMode ? "text-black" : "text-white",
+    lightMode ? "text-white" : "text-black"
+  );
 
-    document
-      .querySelector(".filtering input")
-      .classList.replace("text-black", "text-white");
-
-    // all tasks
-    if (tasksList.length > 0)
-      for (let i of allTasks) {
-        i.classList.replace("text-black", "text-white");
-      }
-  } else {
-    document.body.classList.replace("bg-[#252525]", "bg-white");
-    document
-      .querySelector(".parent h1")
-      .classList.replace("text-white", "text-black");
-    document
-      .querySelector(".filtering input")
-      .classList.replace("text-white", "text-black");
-
-    // all tasks
-    if (tasksList.length > 0)
-      for (let i of allTasks) {
-        i.classList.replace("text-white", "text-black");
-      }
+  if (tasksList.length > 0) {
+    const allTasks = document.querySelectorAll(".task .title");
+    for (let i of allTasks) {
+      i.classList.replace(
+        lightMode ? "text-black" : "text-white",
+        lightMode ? "text-white" : "text-black"
+      );
+    }
   }
 
-  sessionStorage.setItem("theme", JSON.stringify(lightMode));
+  sessionStorage.setItem("theme", JSON.stringify(!lightMode));
 }
