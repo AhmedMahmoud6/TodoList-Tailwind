@@ -13,17 +13,17 @@ function taskInfo(lightMode) {
       class="create-task fixed w-screen h-screen bg-black/50 top-0 flex justify-center items-center"
     >
       <div
-        class="new-note ${
-          lightMode ? `bg-white` : `bg-[#252525]`
-        }  w-200 h-100 rounded-lg p-4 px-30 max-[768px]:px-5 flex flex-col items-center justify-between outline-2 outline-white"
+        class="new-note ${bgColor(
+          lightMode
+        )}  w-200 h-100 rounded-lg p-4 px-30 max-[768px]:px-5 flex flex-col items-center justify-between outline-2 outline-white"
       >
         <div class="top-side flex flex-col gap-4 items-center w-full">
-          <h2 class="${lightMode ? `text-black` : `text-white`}">NEW NOTE</h2>
+          <h2 class="${textColor(lightMode)}">NEW NOTE</h2>
           <input
             type="text"
-            class="task-title placeholder-[#c3c1e5] ${
-              lightMode ? `text-black` : `text-white`
-            } outline-2 outline-[#6c63ff] w-full h-12 px-4 py-1 rounded focus-within:shadow-lg focus-within:shadow-indigo-500/50"
+            class="task-title placeholder-[#c3c1e5] ${textColor(
+              lightMode
+            )} outline-2 outline-[#6c63ff] w-full h-12 px-4 py-1 rounded focus-within:shadow-lg focus-within:shadow-indigo-500/50"
             placeholder="Input your note..."
           />
         </div>
@@ -98,10 +98,10 @@ function createTask(taskList, lightMode) {
                   </div>
                 </label>
                 <div class="right-side m-3 flex gap-4">
-                  <div class="edit hidden group-hover:block cursor-pointer">
+                  <div class="edit hidden group-hover:block max-[768px]:block cursor-pointer">
                     <i class="fa-solid fa-pen" style="color: #7972fe"></i>
                   </div>
-                  <div class="delete hidden group-hover:block cursor-pointer">
+                  <div class="delete hidden group-hover:block max-[768px]:block cursor-pointer">
                     <i class="fa-solid fa-trash" style="color: #ff6b6b"></i>
                   </div>
                 </div>

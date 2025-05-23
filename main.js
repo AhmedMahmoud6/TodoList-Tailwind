@@ -126,6 +126,7 @@ document.addEventListener("click", (e) => {
     filterText.textContent = filterCategory.toUpperCase();
   }
 
+  // trigger menu
   if (menuOpened && !filterDiv.contains(e.target)) {
     triggerMenu(filterMenu, menuOpened);
     menuOpened = !menuOpened;
@@ -156,4 +157,19 @@ filterDiv.addEventListener("click", (_) => {
 theme.addEventListener("click", (_) => {
   changeTheme(tasksList, lightMode);
   lightMode = JSON.parse(sessionStorage.getItem("theme")) ?? true;
+});
+
+// confirm creating task using enter key
+document.addEventListener("keydown", (e) => {
+  if (
+    e.key === "Enter" &&
+    e.target.classList.contains("task-title") &&
+    e.target.value != ""
+  ) {
+    let taskTitle = e.target.value;
+    newTask(taskTitle, tasksList);
+    renderTasks(tasksList, filterCategory, lightMode);
+    removeTaskInfo();
+    sessionStorage.setItem("taskList", JSON.stringify(tasksList));
+  }
 });
