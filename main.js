@@ -20,7 +20,7 @@ if (JSON.parse(sessionStorage.getItem("taskList"))) {
 }
 
 changeTheme(tasksList, !lightMode);
-renderTasks(tasksList);
+renderTasks(tasksList, filterCategory, lightMode);
 
 document.addEventListener("click", (e) => {
   // change status
@@ -41,7 +41,7 @@ document.addEventListener("click", (e) => {
   ) {
     let taskTitle = document.querySelector(".task-title").value;
     newTask(taskTitle, tasksList);
-    renderTasks(tasksList);
+    renderTasks(tasksList, filterCategory, lightMode);
     removeTaskInfo();
     sessionStorage.setItem("taskList", JSON.stringify(tasksList));
   }
@@ -68,7 +68,7 @@ document.addEventListener("click", (e) => {
         }
       }
       sessionStorage.setItem("taskList", JSON.stringify(tasksList));
-      renderTasks(tasksList);
+      renderTasks(tasksList, filterCategory, lightMode);
     }
   } catch (err) {}
 
@@ -113,7 +113,7 @@ document.addEventListener("click", (e) => {
   // filter tasks
   if (filterMenu.contains(e.target)) {
     filterCategory = e.target.id;
-    renderTasks(tasksList, filterCategory);
+    renderTasks(tasksList, filterCategory, lightMode);
     triggerMenu(filterMenu, menuOpened);
     menuOpened = !menuOpened;
 
@@ -135,7 +135,7 @@ addTasks.addEventListener("click", (_) => {
 // serach task
 searchNote.addEventListener("input", (_) => {
   if (searchNote.value == "") {
-    renderTasks(tasksList, filterCategory);
+    renderTasks(tasksList, filterCategory, lightMode);
   } else {
     searchTask(tasksList, searchNote.value);
   }

@@ -1,5 +1,12 @@
 let counter = 0; // acts like an id
 
+function textColor(lightMode) {
+  return lightMode ? "text-black" : "text-white";
+}
+function bgColor(lightMode) {
+  return lightMode ? "bg-white" : "bg-[#252525]";
+}
+
 function taskInfo(lightMode) {
   let infoHTML = `
     <div
@@ -56,22 +63,18 @@ function newTask(newTitle, tasksList) {
   tasksList.push(taskObj);
 }
 
-function renderTasks(taskList, filter = "all") {
+function renderTasks(taskList, filter = "all", lightMode) {
   tasksContainer.innerHTML = "";
-  let filteredTasks;
 
-  if (filter === "all") {
-    filteredTasks = taskList;
-  } else if (filter === "pending") {
-    filteredTasks = taskList.filter((task) => task.status === "pending");
-  } else if (filter === "completed") {
-    filteredTasks = taskList.filter((task) => task.status === "completed");
-  }
+  const filteredTasks =
+    filter === "all"
+      ? taskList
+      : taskList.filter((task) => task.status === filter);
 
-  createTask(filteredTasks);
+  createTask(filteredTasks, lightMode);
 }
 
-function createTask(taskList) {
+function createTask(taskList, lightMode) {
   for (let i of taskList) {
     let taskHtml = `
               <div
@@ -86,9 +89,9 @@ function createTask(taskList) {
                       : `<input type="checkbox" class="input-check form-checkbox h-5 w-5 text-blue-600 cursor-pointer peer" checked/>`
                   }
 
-                    <p class="title peer-checked:line-through peer-checked:text-[#8e8e8e] ${
-                      lightMode ? `text-black` : `text-white`
-                    }">
+                    <p class="title peer-checked:line-through peer-checked:text-[#8e8e8e] ${textColor(
+                      lightMode
+                    )}">
                       ${i.title}
                     </p>
                   </div>
@@ -144,29 +147,14 @@ function changeTheme(tasksList, lightMode) {
     if (element) element.classList.replace(from, to);
   };
 
-  toggleClass(
-    "body",
-    lightMode ? "bg-white" : "bg-[#252525]",
-    lightMode ? "bg-[#252525]" : "bg-white"
-  );
-  toggleClass(
-    ".parent h1",
-    lightMode ? "text-black" : "text-white",
-    lightMode ? "text-white" : "text-black"
-  );
-  toggleClass(
-    ".filtering input",
-    lightMode ? "text-black" : "text-white",
-    lightMode ? "text-white" : "text-black"
-  );
+  toggleClass("body", bgColor(lightMode), bgColor(!lightMode));
+  toggleClass(".parent h1", textColor(lightMode), textColor(!lightMode));
+  toggleClass(".filtering input", textColor(lightMode), textColor(!lightMode));
 
   if (tasksList.length > 0) {
     const allTasks = document.querySelectorAll(".task .title");
     for (let i of allTasks) {
-      i.classList.replace(
-        lightMode ? "text-black" : "text-white",
-        lightMode ? "text-white" : "text-black"
-      );
+      i.classList.replace(textColor(lightMode), textColor(!lightMode));
     }
   }
 
