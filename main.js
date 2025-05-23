@@ -60,7 +60,10 @@ document.addEventListener("click", (e) => {
       e.target.classList.contains("delete") ||
       e.target.parentElement.classList.contains("delete")
     ) {
-      let taskId = e.target.closest(".task").id;
+      let taskElement = e.target.closest(".task");
+      if (!taskElement) return;
+
+      let taskId = taskElement.id;
       for (let i = 0; i < tasksList.length; i++) {
         if (tasksList[i].id == taskId) {
           tasksList.splice(i, 1);
@@ -104,8 +107,8 @@ document.addEventListener("click", (e) => {
             }
           }
           updateTitleColor(lightMode, tasksList);
+          sessionStorage.setItem("taskList", JSON.stringify(tasksList));
         }
-        sessionStorage.setItem("taskList", JSON.stringify(tasksList));
       });
     }
   } catch (err) {}

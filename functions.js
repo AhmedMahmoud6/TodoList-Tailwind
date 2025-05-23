@@ -113,7 +113,7 @@ function createTask(taskList, lightMode) {
 function searchTask(taskList, userInput) {
   let searchedTasks = [];
   searchedTasks = taskList.filter((searched) =>
-    searched.title.startsWith(userInput)
+    searched.title.toLowerCase().startsWith(userInput.toLowerCase())
   );
   renderTasks(searchedTasks);
 }
